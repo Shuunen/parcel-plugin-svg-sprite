@@ -1,6 +1,6 @@
 {
   "name": "parcel-plugin-svg-sprite",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Parcel plugin which generate a SVG sprite with <symbol> elements and inject it in built html",
   "keywords": [
     "svg",
@@ -11,6 +11,10 @@
   ],
   "main": "src/index.js",
   "author": "Frederic Godin",
+  "contributors": [
+    "Frederic Godin",
+    "Romain Racamier-Lafon <romain.racamier@gmail.com>"
+  ],
   "repository": "Epimodev/parcel-plugin-svg-sprite",
   "license": "MIT",
   "files": [
@@ -36,8 +40,7 @@
     "fs-extra": "^7.0.1",
     "lodash": "^4.17.11",
     "posthtml": "^0.11.3",
-    "svg-sprite": "^1.5.0",
-    "xxhash": "^0.2.4"
+    "svg-sprite": "^1.5.0"
   },
   "husky": {
     "hooks": {
