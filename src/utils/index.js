@@ -1,17 +1,18 @@
 const path = require('path');
-const XXHash = require('xxhash');
+const crypto = require('crypto');
 const { createSprite } = require('./sprite');
 
 const STYLE_EXTENSIONS = ['.css', '.scss', '.sass', '.less', '.styl'];
 
 /**
- * @desc Hash content with XXHash
+ * @desc Hash content with crypto
  * @param {string} content - file content
  * @return {number} hash of the content
  */
 function createHash(content) {
   const buffer = Buffer.from(content, 'utf8');
-  const hash = XXHash.hash(buffer, 0xcafebabe);
+  // Thanks to Sindre Sorhus and https://github.com/sindresorhus/rev-hash
+  const hash = crypto.createHash('md5').update(buffer).digest('hex').slice(0, 10);
   return hash;
 }
 
