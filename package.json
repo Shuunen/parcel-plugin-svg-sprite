@@ -1,5 +1,5 @@
 {
-  "name": "parcel-plugin-svg-sprite",
+  "name": "@shuunen/parcel-plugin-svg-sprite",
   "version": "1.2.0",
   "description": "Parcel plugin which generate a SVG sprite with <symbol> elements and inject it in built html",
   "keywords": [
@@ -21,20 +21,16 @@
     "src"
   ],
   "scripts": {
-    "lint": "eslint --ext .js ./src",
-    "check-format": "prettier --list-different 'src/**/*.js'",
-    "prepublish": "yarn lint && yarn check-format"
+    "lint": "standard --fix \"src/**/*.js\"",
+    "prepare": "yarn lint"
   },
   "peerDependencies": {
     "parcel-bundler": "^1.9.7"
   },
   "devDependencies": {
-    "eslint": "^5.13.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0",
     "husky": "^1.3.1",
     "parcel-bundler": "^1.11.0",
-    "prettier": "^1.16.3"
+    "standard": "^12.0.1"
   },
   "dependencies": {
     "fs-extra": "^7.0.1",
@@ -44,7 +40,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn check-format"
+      "pre-commit": "yarn lint"
     }
   }
 }

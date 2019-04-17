@@ -1,5 +1,5 @@
-const { Asset } = require('parcel-bundler');
-const { createHash } = require('./utils');
+const { Asset } = require('parcel-bundler')
+const { createHash } = require('./utils')
 
 class SvgAsset extends Asset {
   /**
@@ -9,14 +9,14 @@ class SvgAsset extends Asset {
    * @return empty object if file is in an `assets` folder
    *         or the svg assets for SvgPackager wth a js asset which contain svg symbol id
    */
-  async generate() {
+  async generate () {
     // this is used to keep original behavior with files imported by css for font
     // here `parentBundle` is null so we can't know if svg is imported by a css file
-    const isFromAssets = this.name.includes('/assets/');
-    const hash = await this.generateHash();
+    const isFromAssets = this.name.includes('/assets/')
+    const hash = await this.generateHash()
 
     if (isFromAssets) {
-      return {};
+      return {}
     }
 
     return [
@@ -25,23 +25,23 @@ class SvgAsset extends Asset {
         value: {
           hash,
           path: this.name,
-          content: this.contents,
-        },
+          content: this.contents
+        }
       },
       {
         type: 'js',
-        value: `module.exports = '#${hash}'`,
-      },
-    ];
+        value: `module.exports = '#${hash}'`
+      }
+    ]
   }
 
   /**
    * @desc generate hash of svg content
    * @return {string}
    */
-  async generateHash() {
-    return createHash(this.contents).toString();
+  async generateHash () {
+    return createHash(this.contents).toString()
   }
 }
 
-module.exports = SvgAsset;
+module.exports = SvgAsset

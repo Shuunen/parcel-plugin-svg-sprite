@@ -1,5 +1,5 @@
-const SVGSpriter = require('svg-sprite');
-const findLast = require('lodash/findLast');
+const SVGSpriter = require('svg-sprite')
+const findLast = require('lodash/findLast')
 
 /**
  * @desc Create id generator function to inject id from svgList in svg sprite
@@ -9,20 +9,20 @@ const findLast = require('lodash/findLast');
  * @param {string} svgList[].content
  * @return {createIdGenerator~generator}
  */
-function createIdGenerator(svgList) {
+function createIdGenerator (svgList) {
   /**
    * @desc Generate the symbol id of a svg from file name
    * @param {string} defaultId - default id
    * @param {File} file - vinyl file input
    * @return {string} the symbol id
    */
-  function generator(defaultId, file) {
-    const svgItem = findLast(svgList, item => item.path === file.path);
-    if (!svgItem) throw new Error(`File ${file.path} not found in svg list during id generation`);
-    return svgItem.hash;
+  function generator (defaultId, file) {
+    const svgItem = findLast(svgList, item => item.path === file.path)
+    if (!svgItem) throw new Error(`File ${file.path} not found in svg list during id generation`)
+    return svgItem.hash
   }
 
-  return generator;
+  return generator
 }
 
 /**
@@ -34,19 +34,19 @@ function createIdGenerator(svgList) {
  * @param {string} svgList[].content
  * @return {Promise} promise with svg sprite string
  */
-function createConfig(svgList) {
+function createConfig (svgList) {
   return {
     shape: {
       id: {
-        generator: createIdGenerator(svgList),
-      },
+        generator: createIdGenerator(svgList)
+      }
     },
     mode: {
       symbol: {
-        inline: true,
-      },
-    },
-  };
+        inline: true
+      }
+    }
+  }
 }
 
 /**
@@ -54,7 +54,7 @@ function createConfig(svgList) {
  * @param {SVGSpriter} spriter - spriter where to add file
  * @return {addFileInSpriter~addFile}
  */
-function addFileInSpriter(spriter) {
+function addFileInSpriter (spriter) {
   /**
    * @desc Add file
    * @param {object} svgInfo
@@ -63,10 +63,10 @@ function addFileInSpriter(spriter) {
    * @param {string} svgInfo.content
    * @return {Promise} Promise resolved when svg file is read an added in spriter
    */
-  function addFile(svgInfo) {
-    spriter.add(svgInfo.path, null, svgInfo.content);
+  function addFile (svgInfo) {
+    spriter.add(svgInfo.path, null, svgInfo.content)
   }
-  return addFile;
+  return addFile
 }
 
 /**
@@ -74,15 +74,15 @@ function addFileInSpriter(spriter) {
  * @param {SVGSpriter} spriter - spriter which contain files to compile
  * @return {Promise} promise with result as a string
  */
-function compileSprite(spriter) {
+function compileSprite (spriter) {
   return new Promise((resolve, reject) => {
     spriter.compile((error, result) => {
-      if (error) return reject(error);
+      if (error) return reject(error)
 
-      const { contents } = result.symbol.sprite;
-      return resolve(contents.toString('utf8'));
-    });
-  });
+      const { contents } = result.symbol.sprite
+      return resolve(contents.toString('utf8'))
+    })
+  })
 }
 
 /**
@@ -93,15 +93,15 @@ function compileSprite(spriter) {
  * @param {string} svgList[].content
  * @return {Promise} promise with svg sprite string
  */
-function createSprite(svgList) {
-  const spritterConfig = createConfig(svgList);
-  const spritter = new SVGSpriter(spritterConfig);
+function createSprite (svgList) {
+  const spriterConfig = createConfig(svgList)
+  const spriter = new SVGSpriter(spriterConfig)
 
-  svgList.map(addFileInSpriter(spritter));
+  svgList.map(addFileInSpriter(spriter))
 
-  return compileSprite(spritter);
+  return compileSprite(spriter)
 }
 
 module.exports = {
-  createSprite,
-};
+  createSprite
+}
